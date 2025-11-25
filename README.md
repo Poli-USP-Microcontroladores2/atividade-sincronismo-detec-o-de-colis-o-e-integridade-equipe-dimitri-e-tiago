@@ -27,7 +27,7 @@ Pressione o botão quando Placa A é transmissora. Quando for pressionado, Placa
 
 Agora pressione quando Placa A é receptora. Quando for pressionado, Placa A deve mudar seu estado e placa B deve ser receptora.
 
-Tudo será informado por leds, sendo:
+na prática, tudo será informado por leds, sendo:
 
 LED vermelho: Transmissora
 LED verde: receptora
@@ -36,7 +36,6 @@ LED verde: receptora
 
 Percebe-se a necessidade de detectar e evitar colisões pois o sincronismo por botão não é perfeito, ou seja, com o passar do tempo as chances de gerar colisão aumenta gradativamente.
 
-Reflita inicialmente se vocês consideram o sincronismo feito por botão algo perfeito, ou se ele pode falhar.
 _Será que é necessário fazer um sincronismo periódico?_
 
 Nos casos em que há problemas de sincronismo, podemos ter o cenário de colisão: quando as duas placas tentam transmitir ao mesmo tempo.
