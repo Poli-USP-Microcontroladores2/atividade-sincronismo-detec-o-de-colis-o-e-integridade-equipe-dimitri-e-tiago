@@ -11,20 +11,31 @@ _Lembrete_: o código-base para a atividade anterior está disponível em: https
 
 ## Etapa 1: Modelagem e Planejamento de Testes
 
-Considerando o cenário proposto de comunicação entre duas placas com modo de operação simples de 5 segundos para transmitir e 5 segundos para receber, é natural que ocorram problemas de sincronismo: uma placa pode acabar transmitindo enquanto a outra está transmitindo também, e mesmo no recebimento podemos não receber a mensagem completa.
+Para o projeto, dedicamos duas placas, placa do Dimitri(placa A) e a placa do Tiago(Placa B), uma transmissora e outra receptora, enviando mensagerns a cada 5 segundos. A idéia é que o usuário digite uma mensagem, essa mensagem será enviada para Placa A, e depois enviada para Placa B. Após isso, os papéis se invertem e Placa B vira transmissora e envia a mensagem de volta para placa A, que é receptora. Quando a placa A receber a mensagem de volta, irá reescrever ela no terminal. Para casos onde não há comunicação com o computador, as placas informam seu estado por meio de leds, informando seus estados(transmissor e receptor) pelos LEDS vermelho e verde. Já para quando mensagem for recebida pela Placa A, um led azul é ativado.
 
 ### 1.1. Sincronismo por Botão
 
-A proposta é elaborar um sincronismo entre as duas placas por meio de um botão, de forma similar ao realizado na atividade de semáforos de pedestres e veículos. Dica: provavelmente os códigos não serão os mesmos, ou algum ajuste adaptativo deve ser realizado para que uma placa esteja no modo de transmissão após o usuário apertar o botão, e a outra placa esteja no modo de recepção.
+Nossa idéia inicial é de ambos os códigos serem extremamente parecidos, buscando modificar apenas o necessário. Para implementar o botão, fizemos com que a placa A se tornasse transmissor independente de seu estado e a placa B se tornasse receptor independente de seu estado atual. Para isso, ligamos um pino de cada placa na saída de um botão que, quando pressionado, envia ao mesmo tempo um sinal para ambas as placas.
 
-_Elabore um diagrama de transição de estados inicial para modelar como as duas placas irão interagir com o sincronismo por botão, considerando os diversos estados possíveis e os eventos que determinam as transições de estados (vocês podem utilizar o D2 diagrams visto em atividade anterior: https://play.d2lang.com/)_.
 
-_Descreva um teste para verificação de correto funcionamento do sistema considerando este requisito de sincronismo por meio de botão, contemplando pré-condição, etapas do teste e pós-condição, de forma similar ao realizado em atividades anteriores (Dica: como não terá o canal de comunicação com o computador, podem utilizar o led da placa para indicar a transmissão e recepção de informações)_.
-A ideia é descrever o teste primeiro antes da implementação, de acordo com o TDD visto na atividade passada.
+_Elabore um diagrama de transição de estados inicial para modelar como as duas placas irão interagir com o sincronismo por botão, considerando os diversos estados possíveis e os eventos que determinam as transições de estados (vocês podem utilizar o D2 diagrams visto em atividade anterior: https://play.d2lang.com/)_. 
+
+# Teste para verificação de funcionamento do sincronismo
+
+Adicionar logs que informam o estado da placa(transmissor ou receptor)
+Pressione o botão quando Placa A é transmissora. Quando for pressionado, Placa A não deve mudar seu estado e placa B deve ser receptora.
+
+Agora pressione quando Placa A é receptora. Quando for pressionado, Placa A deve mudar seu estado e placa B deve ser receptora.
+
+na prática, tudo será informado por leds, sendo:
+
+LED vermelho: Transmissora
+LED verde: receptora
 
 ### 1.2. Detecção de Colisão
 
-Reflita inicialmente se vocês consideram o sincronismo feito por botão algo perfeito, ou se ele pode falhar.
+Percebe-se a necessidade de detectar e evitar colisões pois o sincronismo por botão não é perfeito, ou seja, com o passar do tempo as chances de gerar colisão aumenta gradativamente.
+
 _Será que é necessário fazer um sincronismo periódico?_
 
 Nos casos em que há problemas de sincronismo, podemos ter o cenário de colisão: quando as duas placas tentam transmitir ao mesmo tempo.
